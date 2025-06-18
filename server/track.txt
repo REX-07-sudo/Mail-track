@@ -1,0 +1,4 @@
+Mail Opened - ID: example | Time: 2025-06-18T12:10:44.274Z | IP: ::1
+Mail Opened - ID: 34354 | Time: 2025-06-18T12:11:11.704Z | IP: ::1
+Mail Opened - ID: 872486824 | Time: 2025-06-18T12:11:22.716Z | IP: ::1
+Mail Opened - ID: 872486824280 | Time: 2025-06-18T12:11:29.024Z | IP: ::1
