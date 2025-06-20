@@ -1,4 +1,4 @@
-browser.runtime.onInstalled.addListener(() => {
-    console.log("Mailtrack Extension Installed");
-  });
-  
+
+chrome.runtime.onInstalled.addListener(() => {
+  console.log("Gmail Tracking Pixel extension installed.");
+});

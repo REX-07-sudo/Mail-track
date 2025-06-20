@@ -1,22 +1,46 @@
-// Observe Gmail's compose area and inject a tracking pixel
+
+function attachSendHandler(sendBtn) {
+  if (sendBtn.dataset.trackingAttached) return; 
+  sendBtn.dataset.trackingAttached = 'true';
+
+ 
+  sendBtn.addEventListener('click', function handler(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    
+    const pixelId = generateUniqueId();
+    
+    const pixelUrl = `https://server-1-pnj3.onrender.com/track/${pixelId}`;
+
+    
+    const composeBody = document.querySelector('div[contenteditable][aria-label="Message Body"]');
+    if (composeBody) {
+      const img = document.createElement('img');
+      img.src = pixelUrl;  
+      img.width = 1;
+      img.height = 1;
+      img.style.display = 'none'; 
+      composeBody.appendChild(img);
+    }
+
+    
+    sendBtn.removeEventListener('click', handler, true);
+    sendBtn.click();  
+  }, true);
+}
+
+
 const observer = new MutationObserver(() => {
-    const composeAreas = document.querySelectorAll('[aria-label="Message Body"]');
   
-    composeAreas.forEach(area => {
-      if (area.dataset.pixelInjected) return;
-  
-      const pixel = document.createElement("img");
-      pixel.src = "https://localhost:3000/track?id=UNIQUE_ID";
-      pixel.style = "width:1px;height:1px;display:none;";
-      area.appendChild(pixel);
-  
-      area.dataset.pixelInjected = "true";
-      console.log("✅ Tracking pixel inserted.");
-    });
-  });
-  
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
-  
+  const sendButtons = document.querySelectorAll('div[role="button"][data-tooltip^="Send"]');
+  sendButtons.forEach(attachSendHandler);
+});
+
+
+observer.observe(document.body, { childList: true, subtree: true });
+
+window.addEventListener('load', () => {
+  const initialButtons = document.querySelectorAll('div[role="button"][data-tooltip^="Send"]');
+  initialButtons.forEach(attachSendHandler);
+});

@@ -1,28 +1,37 @@
+
+
 import express from 'express';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
 const app = express();
-const PORT = 3000;
+const port = 3000;
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
-app.get('/track', (req, res) => {
-  const id = req.query.id || 'unknown';
-  const timestamp = new Date().toISOString();
-  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+app.use((req, res, next) => {
 
-  const logEntry = `Mail Opened - ID: ${id} | Time: ${timestamp} | IP: ${ip}\n`;
-  fs.appendFileSync('track.txt', logEntry);
-
-  // Send 1x1 pixel image
-  const pixelPath = path.join(__dirname, 'test.png');
-  res.sendFile(pixelPath);
+  next();
 });
 
-app.listen(PORT, () => {
-  console.log(`✅Mail Tracker server running at http://localhost:${PORT}/track?id=example`);
+
+app.get('/track/:pixelId', (req, res) => {
+  const { pixelId } = req.params;
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  const timestamp = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+  console.log(`Pixel opened: id=${pixelId}, ip=${ip}, time=${timestamp}`);
+
+
+  res.setHeader('Content-Type', 'image/gif');
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+
+
+  const pixelGif = Buffer.from(
+    'R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==',
+    'base64'
+  );
+  res.send(pixelGif);
+});
+
+
+app.listen(port, () => {
+  console.log(`Tracking server listening at http://localhost:${port}/`);
 });
