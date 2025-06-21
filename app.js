@@ -1,5 +1,19 @@
+function getReceiverEmail() {
+  const emailInput = document.querySelector('textarea[name="to"]');
+  if (emailInput && emailInput.value.trim()) {
+    return emailInput.value.trim();
+  }
+
+  const emailSpan = document.querySelector('div[aria-label="To"] [email]');
+  if (emailSpan) {
+    return emailSpan.getAttribute('email') || "Unknown";
+  }
+
+  return "Unknown";
+}
 
 function attachSendHandler(sendBtn) {
+  
   if (sendBtn.dataset.trackingAttached) return; 
   sendBtn.dataset.trackingAttached = 'true';
 
@@ -11,7 +25,7 @@ function attachSendHandler(sendBtn) {
     
     const pixelId = generateUniqueId();
     
-    const pixelUrl = `https://server-3-8a90.onrender.com/track/${pixelId}`;
+    const pixelUrl = `https://server-2-e9uw.onrender.com/track/${pixelId}`;
 
     
     const composeBody = document.querySelector('div[contenteditable][aria-label="Message Body"]');
@@ -24,7 +38,8 @@ function attachSendHandler(sendBtn) {
       composeBody.appendChild(img);
       chrome.runtime.sendMessage({
                 action:  'trackPixel',
-                pixelId: pixelId
+                pixelId: pixelId,
+                receiverEmail: getReceiverEmail()
                });
 
 

@@ -3,7 +3,10 @@ const tracked = {};
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.action === "trackPixel") {
-    tracked[msg.pixelId] = { notified: false };
+    tracked[msg.pixelId] = { 
+      notified: false,
+      receiverEmail: msg.receiverEmail || "Unknown"
+     };
   }
 });
 
@@ -14,15 +17,17 @@ chrome.alarms.onAlarm.addListener(alarm => {
   for (const pixelId in tracked) {
     if (tracked[pixelId].notified) continue;
 
-    fetch(`https://server-3-8a90.onrender.com/status/${pixelId}`)
+    fetch(`https://server-2-e9uw.onrender.com/status/${pixelId}`)
       .then(r => r.json())
       .then(data => {
         if (data.seen) {
+          const email = tracked[pixelId].receiverEmail || "Unknown";
+
           chrome.notifications.create(pixelId, {
             type: "basic",
             iconUrl: chrome.runtime.getURL("icons/icon128.png"),
             title: "Email Read",
-            message: `Your email (ID ${pixelId}) was opened.`,
+            message: `Your email was opened.`,
           });
           tracked[pixelId].notified = true;
         }
