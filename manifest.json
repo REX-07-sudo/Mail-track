@@ -18,5 +18,9 @@
     }
   ],
 
-  "permissions": []
+  "permissions": [
+  "notifications",
+  "storage",
+  "alarms",
+  "https://server-3-8a90.onrender.com/*"]
 }

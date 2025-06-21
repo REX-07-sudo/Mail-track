@@ -2,36 +2,46 @@ import express from 'express';
 const app = express();
 const port = 3000;
 
-const pixelMap = new Map(); 
+app.set('trust proxy', true);
+
+const pixelMap = new Map();
 
 app.get('/track/:pixelId', (req, res) => {
   const { pixelId } = req.params;
-  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-  const ua = req.headers['user-agent'];
+  const ip = req.ip;  
+  const ua = req.get('User-Agent') || '';
   const timestamp = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
-  const now = Date.now();
-  const threshold = 5000; 
 
   const entry = pixelMap.get(pixelId);
+
+  const isGoogleImageProxy = ua.includes('GoogleImageProxy');
+  const isGmailScanBot =
+    ua.includes('Chrome/42.0') &&
+    (ua.includes('Edge/12') || ua.includes('Windows NT 6.1')); 
 
   if (!entry) {
     
     pixelMap.set(pixelId, {
       senderIP: ip,
       senderUA: ua,
-      timestamp: now,
+      timestamp: Date.now(),
       receiverLogged: false
     });
-    console.log(`Sender pixel loaded: id=${pixelId}, ip=${ip}, time=${timestamp}`);
+    console.log(`Sender pixel registered: id=${pixelId}, ip=${ip}, time=${timestamp}`);
   } else {
-    const isSameDevice = ip === entry.senderIP && ua === entry.senderUA;
-    const isTooSoon = now - entry.timestamp < threshold;
-
-    if (!entry.receiverLogged && (!isSameDevice || !isTooSoon)) {
-      console.log(`Receiver opened mail: id=${pixelId}, ip=${ip}, time=${timestamp}`);
-      entry.receiverLogged = true;
-    } else {
-      console.log(`Duplicate or sender open ignored for id=${pixelId}`);
+    if (!entry.receiverLogged) {
+      if (isGmailScanBot) {
+        console.log(`Gmail scan bot detected, ignoring open: id=${pixelId}`);
+      } else {
+        console.log(`Receiver opened email: id=${pixelId}, ip=${ip}, ua=${ua}, time=${timestamp}`);
+        pixelMap.set(pixelId, {
+          ...entry,
+          receiverLogged: true
+        });
+      }
+    }
+     else {
+      console.log(`Duplicate pixel load ignored: id=${pixelId}`);
     }
   }
 
@@ -45,6 +55,14 @@ app.get('/track/:pixelId', (req, res) => {
     'base64'
   );
   res.send(pixelGif);
+});
+
+app.get('/status/:pixelId', (req, res) => {
+  const entry = pixelMap.get(req.params.pixelId);
+
+  if (!entry) return res.json({ seen: false });
+
+  res.json({ seen: entry.receiverLogged || false });
 });
 
 app.listen(port, () => {
