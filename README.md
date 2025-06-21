@@ -4,7 +4,7 @@
 <h2>Features Implemented</h2>
 <li>Detects when the recipient opens the email</li>
 <li>Logs IP address, timestamp, and pixel ID on the server</li>
-<li>Sends a browser notification to the sender when the email is read (Currently working on it) </li>
+<li>Sends a browser notification to the sender when the email is read  </li>
 <li>Deduplicates multiple reads and filters sender-side logs</li>
 
 <h2>Working of the project</h2>
