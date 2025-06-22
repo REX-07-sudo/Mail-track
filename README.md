@@ -14,6 +14,7 @@
 <li>The server logs the access and marks it as "seen".</li>
 
 <h2>Instructions for testing the extension</h2>
+<li>Clone this repo on your code editor</li>
 <li>Install all the dependencies by npm install</li>
 <li>Deploy the server.js file on Render(or any other platform)</li>
 <li>Load the firefox extension by going to about:debugging and click "Load Temporary Add-on"</li>
