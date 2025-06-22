@@ -6,7 +6,6 @@
 <li>Logs timestamp and pixel ID on the server</li>
 <li>Sends a browser notification to the sender when the email is read  </li>
 <li>Deduplicates multiple reads and filters sender-side logs</li>
-<li>Added a dashboard in extension toolbar where user can see his opened and not opened mails</li>
 
 <h2>Working of the project</h2>
 <li>When you compose and send an email in Gmail, the extension injects a hidden 1×1 pixel with a unique ID.</li>
