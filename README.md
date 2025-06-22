@@ -20,3 +20,15 @@
 <li>Load the firefox extension by going to about:debugging and click "Load Temporary Add-on"</li>
 <li>Select the manifest.json file and upload it</li>
 <li>Open gmail and start testing by sending mails</li>
+
+<h2>Asumptions for evaluation</h2>
+<li>The recipient will open the email in a browser that allows image loading</li>
+<li>Gmail will not aggressively cache or proxy the tracking pixel in a way that blocks the server hit</li>
+<li>The server is publicly hosted (e.g., via Render) and accessible without requiring authentication</li>
+<li>Gmail continues to use accessible aria-label attributes like "Send" and "Message Body" to locate DOM elements</li>
+
+<h2>Additional Features</h2>
+<li>User-Agent + IP-based sender/receiver filtering</li>
+<li>Real-time browser notifications when mail is opened</li>
+<li>Automatic unique pixel ID generation</li>
+<li>Added dashboard for tracking the time when the mail was opened</li>
