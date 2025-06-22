@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tracked Emails</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <h2>Tracked Emails</h2>
+  <div id="filters">
+    <label>Status:
+      <select id="statusFilter">
+        <option value="all">All</option>
+        <option value="opened">Opened</option>
+        <option value="not-opened">Not Opened</option>
+      </select>
+    </label>
+  </div>
+  <table id="emailTable">
+    <thead>
+      <tr>
+        <th>Receiver</th>
+        <th>Subject</th>
+        <th>Status</th>
+        <th>Opened At</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <script src="popup.js"></script>
+</body>
+</html>

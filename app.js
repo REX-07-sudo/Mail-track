@@ -25,7 +25,7 @@ function attachSendHandler(sendBtn) {
     
     const pixelId = generateUniqueId();
     
-    const pixelUrl = `https://server-2-e9uw.onrender.com/track/${pixelId}`;
+    const pixelUrl = `https://server-2-u9i6.onrender.com/track/${pixelId}`;
 
     
     const composeBody = document.querySelector('div[contenteditable][aria-label="Message Body"]');

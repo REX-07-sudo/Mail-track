@@ -1,0 +1,25 @@
+body {
+    font-family: sans-serif;
+    padding: 10px;
+    width: 400px;
+  }
+  
+  h2 {
+    margin-top: 0;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  
+  th, td {
+    padding: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  #filters {
+    margin-bottom: 10px;
+  }
+  

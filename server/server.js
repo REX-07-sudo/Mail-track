@@ -36,7 +36,8 @@ app.get('/track/:pixelId', (req, res) => {
         console.log(`Receiver opened email: id=${pixelId}, ip=${ip}, ua=${ua}, time=${timestamp}`);
         pixelMap.set(pixelId, {
           ...entry,
-          receiverLogged: true
+          receiverLogged: true,
+          seenTime: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })
         });
       }
     }
@@ -62,7 +63,9 @@ app.get('/status/:pixelId', (req, res) => {
 
   if (!entry) return res.json({ seen: false });
 
-  res.json({ seen: entry.receiverLogged || false });
+  res.json({ seen: entry.receiverLogged || false,
+             timestamp: entry.seenTime || null
+  });
 });
 
 app.listen(port, () => {

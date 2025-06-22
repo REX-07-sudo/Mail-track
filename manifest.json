@@ -3,6 +3,11 @@
   "name": "Gmail Tracking Pixel Injector",
   "version": "1.0",
   "description": "Injects a hidden 1x1 tracking pixel into Gmail on send and logs opens.",
+  
+  "browser_action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "icons/icon128.png"
+  },
 
   "background": {
     "scripts": ["background.js"],
@@ -22,5 +27,5 @@
   "notifications",
   "storage",
   "alarms",
-  "https://server-2-e9uw.onrender.com/*"]
+  "https://server-2-u9i6.onrender.com/*"]
 }
