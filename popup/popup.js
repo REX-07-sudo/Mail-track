@@ -1,5 +1,5 @@
 
-const SERVER_URL = 'https://server-2-u9i6.onrender.com';
+const SERVER_URL = 'https://server-4-hqoz.onrender.com';
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('statusFilter')
@@ -11,9 +11,9 @@ async function loadEmails() {
   const tableBody = document.querySelector('#emailTable tbody');
   tableBody.innerHTML = '';
 
-  // Ask the background script for the tracked map
+ 
   chrome.runtime.sendMessage({ action: 'getTrackedEmails' }, async ({ tracked }) => {
-    // tracked is now   { pixelId1: { subject, receiverEmail }, pixelId2: {...}, … }
+
     const filter = document.getElementById('statusFilter').value;
 
     if (!tracked || Object.keys(tracked).length === 0) {

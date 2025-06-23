@@ -17,7 +17,7 @@ chrome.alarms.onAlarm.addListener(alarm => {
   for (const pixelId in tracked) {
     if (tracked[pixelId].notified) continue;
 
-    fetch(`https://server-2-u9i6.onrender.com/status/${pixelId}`)
+    fetch(`https://server-4-hqoz.onrender.com/status/${pixelId}`)
       .then(r => r.json())
       .then(data => {
         if (data.seen) {
